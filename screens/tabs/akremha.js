@@ -1,5 +1,5 @@
 import React,{Component}  from "react";
-import { StyleSheet, Text, View  ,TextInput ,TouchableOpacity,TouchableHighlight,ScrollView} from 'react-native';
+import { StyleSheet, Text, View  ,TextInput ,TouchableOpacity,TouchableHighlight,ScrollView,I18nManager } from 'react-native';
 import { BottomSheet , RadioGroup, RadioButtonProps ,RadioButton} from "react-native-btr";
 import { Feather,AntDesign ,FontAwesome5 ,MaterialIcons ,MaterialCommunityIcons ,Entypo,
   Fontisto
@@ -50,7 +50,8 @@ import * as Linking from 'expo-linking';
             maybe_selected:false
         
         }
-
+       I18nManager.allowRTL(true);
+      I18nManager.forceRTL(true);
         this.setValue = this.setValue.bind(this);
         this.time_setValue = this.time_setValue.bind(this);
       }
@@ -58,7 +59,7 @@ import * as Linking from 'expo-linking';
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
+          allowsEditing: false,
           aspect: [4, 3],
           quality: 1,
         });
@@ -77,8 +78,8 @@ import * as Linking from 'expo-linking';
 
   toggle =()=>{
     //this.setState({visible:!this.state.visible})
-    this.props.navigation.goBack()
-
+  //  this.props.navigation.goBack()
+  this.props.navigation.replace('tabs')
   }
   time_toggle =()=>{
     this.setState({time_visble:!this.state.time_visble})
@@ -119,7 +120,6 @@ import * as Linking from 'expo-linking';
   }
   onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
-   alert(currentDate)
     this.setState({show_picker:false,end_date:currentDate})
   };
 
@@ -150,10 +150,11 @@ componentWillUnmount(){
       >
           
         <View style={styles.card}>
-        <ScrollView style={styles.card_1}>
+        <ScrollView
+         key={this.state.quantity_number} style={styles.card_1}>
 
          
-         <View style={styles.header}>
+         <View style={styles.header} key={1}>
           <View>
           <Text style={{fontSize:16,fontWeight:'800'}}>
             اضافة طعام
@@ -163,10 +164,10 @@ componentWillUnmount(){
           </Text>
           </View>
           <Feather name="x-square" size={24} color="black" style={styles.icon} 
-             onPress={()=>{ this.setState({visible:!this.state.visible})
-                     this.props.navigation.goBack()}}    />
+             onPress={()=>{ 
+                     this.props.navigation.replace('tabs')}}    />
          </View>
-         <View style={{marginTop:'3%',width:'100%'}}>
+         <View style={{marginTop:'3%',width:'100%'}} key={2}>
           <Text style={{fontSize:12,fontWeight:'600',marginStart:'5%'}}>
             اسم العرض <Text style={{color:'red'}}>*</Text>
           </Text>
@@ -177,11 +178,15 @@ componentWillUnmount(){
            style ={styles.search_input}
             />
          </View>
-         <View style={{marginTop:'3%',width:'100%'}}>
+         <View style={{marginTop:'3%',width:'100%'}} key={3}>
           <Text style={{fontSize:12,fontWeight:'600',marginStart:'5%'}}>
             نوع الطعام  <Text style={{color:'red'}}>*</Text>
           </Text>
           <DropDownPicker
+            listItemContainerStyle={{backgroundColor:'red',justifyContent:'center',alignItems:'center',width:'100%'}}
+            // listItemLabelStyle ={{backgroundColor:'green',justifyContent:'center'}}
+             listParentContainerStyle={{backgroundColor:'white',justifyContent:'center',alignItems:'center'}}
+             dropDownContainerStyle={{width:'90%',marginHorizontal:'5%'}}
               style={styles.dropdown}
               open={this.state.open}
               value={this.state.value} //genderValue
@@ -191,15 +196,17 @@ componentWillUnmount(){
              setItems={this.setItems}
               placeholder=" حدد نوع الطعام"
               placeholderStyle={styles.placeholderStyles}
-             
-
               onOpen={()=>this.setState({open:!this.state.open,time_open:false})}
+              listMode="SCROLLVIEW"
+              scrollViewProps={{
+                nestedScrollEnabled: true,
+        }}
             //  onChangeValue={onChange}
-              zIndex={3000}
-              zIndexInverse={1000}
+            //  zIndex={3000}
+             // zIndexInverse={1000}
             />
          </View>
-         <View style={{marginTop:'10%',width:'100%'}}>
+         <View style={{marginTop:'10%',width:'100%'}} key={4}>
           <Text style={{fontSize:12,fontWeight:'600',marginStart:'5%'}}>
             وصف الطعام  <Text style={{color:'gray'}}>(اختياري)</Text>
           </Text>
@@ -210,7 +217,7 @@ componentWillUnmount(){
            style ={styles.search_input_2}
             />
          </View>
-         <View style={{marginTop:'3%',width:'100%'}}>
+         <View style={{marginTop:'3%',width:'100%'}} key={5}>
          <Text style={{fontSize:12,fontWeight:'600',marginStart:'5%'}}>
             الكمية المتاحة   <Text style={{color:'red'}}>*</Text>
           </Text>
@@ -218,7 +225,7 @@ componentWillUnmount(){
           < TouchableOpacity
           onPress={()=>this.setState({quantity_number:this.state.quantity_number+1})}
            style={{width:30,height:30,justifyContent:'center',
-           alignItems:'center',backgroundColor:'#1ABC9C',borderRadius:100}}>
+           alignItems:'center',backgroundColor:'#B99C28',borderRadius:100}}>
           <AntDesign name="plus" size={15} color="white"  />
           </TouchableOpacity>
           <Text style={{paddingHorizontal:'5%'}}>
@@ -236,17 +243,23 @@ componentWillUnmount(){
           
         </View>
          </View>
-         <View style={{marginTop:'3%',width:'100%'}}>
-          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',width:'80%',}}>
-          <Text style={{fontSize:12,fontWeight:'600',marginStart:'6%'}}>
+         <View style={{marginTop:'3%',width:'100%'}}key={6}>
+          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',width:'100%',}}>
+            <View style={{width:'45%',marginStart:'5%'}}>
+            <Text style={{fontSize:12,fontWeight:'600',}}>
             تاريخ الانتهاء   <Text style={{color:'red'}}>*</Text>
           </Text>
-          <Text style={{fontSize:12,fontWeight:'600',marginEnd:'10%'}}>
+            </View>
+
+            <View style={{width:'45%',marginEnd:'2%'}}>
+          <Text style={{fontSize:12,fontWeight:'600'}}>
             وقت الاستلام   <Text style={{color:'red'}}>*</Text>
           </Text>
           </View>
-        <View style={{flexDirection:'row',alignItems:'center',
-        width:'90%',marginHorizontal:'2%'}}>
+          </View>
+
+        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',
+        width:'90%',marginHorizontal:'5%'}}>
         <TouchableHighlight
         onPress={()=>this.showMode()}
         style ={styles.end_data}
@@ -263,10 +276,13 @@ componentWillUnmount(){
        
         </TouchableHighlight>
      
-           
-              <DropDownPicker
+            <DropDownPicker
               style={styles.recive_time_style}
               open={this.state.time_open}
+               listItemContainerStyle={{backgroundColor:'red',justifyContent:'center',alignItems:'center',width:'100%'}}
+              // listItemLabelStyle ={{backgroundColor:'green',justifyContent:'center'}}
+               listParentContainerStyle={{backgroundColor:'white',justifyContent:'center',alignItems:'center'}}
+               dropDownContainerStyle={{width:180,marginLeft:60,justifyContent:'center',alignItems:'center'}}
               value={this.state.time_value} //genderValue
               items={this.state.time_items}
               setOpen={ ()=>this.setState({time_open:false})}
@@ -274,13 +290,17 @@ componentWillUnmount(){
              setItems={this.time_items}
               placeholder=" حدد وقت الاستلام "
               placeholderStyle={styles.placeholderStyles}
-             
-
+              listMode="SCROLLVIEW"
+              scrollViewProps={{
+                nestedScrollEnabled: true,
+        }}
               onOpen={()=>this.setState({time_open:!this.state.time_open,open:false})}
             //  onChangeValue={onChange}
-              zIndex={3000}
-              zIndexInverse={1000}
-            />
+            //  zIndex={3000}
+             // zIndexInverse={1000}
+            /> 
+            
+       
           </View> 
         
       
@@ -289,15 +309,13 @@ componentWillUnmount(){
 {this.state.show_picker && (
         <DateTimePicker
           testID="dateTimePicker"
-          
           value={this.state.end_date}
           mode={this.state.mood}
          // is24Hour={true}
-         
           onChange={this.onChange}
         />
       )}
-         <View style={{marginTop:'3%',width:'100%'}}>
+         <View style={{marginTop:'3%',width:'100%'}} key={7}>
           <Text style={{fontSize:12,fontWeight:'600',marginStart:'5%'}}>
             مكان الاستلام   <Text style={{color:'gray'}}>(اختياري)</Text>
           </Text>
@@ -309,8 +327,8 @@ componentWillUnmount(){
                 longitudeDelta: 0.0421,
               }}
            />
-         </View>
-         <View style={{marginTop:'3%',width:'100%'}}>
+         </View >
+         <View style={{marginTop:'3%',width:'100%'}} key={8}>
           <Text style={{fontSize:12,fontWeight:'600',marginStart:'5%'}}>
             ارفاق الصور   <Text style={{color:'red'}}>*</Text>
           </Text>
@@ -335,7 +353,7 @@ componentWillUnmount(){
        
         </TouchableHighlight>
          </View>
-         <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',width:'90%',marginHorizontal:'5%',marginTop:'3%'}}>
+         <View  key={9} style={{flexDirection:'row',justifyContent:'center',alignItems:'center',width:'90%',marginHorizontal:'5%',marginTop:'3%'}}>
              <Text style={{fontSize:12,fontWeight:'600',}}>
             هل يحتوي الطعام على مسببات الحساسية ؟       
           </Text>
@@ -346,7 +364,7 @@ componentWillUnmount(){
           </TouchableHighlight>
 
          </View>
-         <View style={{justifyContent:'flex-start',alignItems:'center',marginTop:'3%'}}>
+         <View style={{alignItems:'center',marginTop:'3%',}} key={10}>
          <RadioButton
          value="1"
          label="نعم"
@@ -357,6 +375,7 @@ componentWillUnmount(){
         }
          selected={this.state.yes_selected}
           containerStyle={styles.radio_button_style}
+          labelStyle={{paddingHorizontal:'2%'}}
         />
           <RadioButton
          value="1"
@@ -368,6 +387,7 @@ componentWillUnmount(){
         }
          selected={this.state.no_selected}
           containerStyle={styles.radio_button_style}
+          labelStyle={{paddingHorizontal:'2%'}}
         />
             <RadioButton
          value="3"
@@ -380,10 +400,11 @@ componentWillUnmount(){
 
         }
           containerStyle={styles.radio_button_style}
+          labelStyle={{paddingHorizontal:'2%'}}
         />
          </View>
        
-      <TouchableOpacity style={styles.selection_style} onPress={()=>this.props.navigation.replace('after_add')}>
+      <TouchableOpacity style={styles.selection_style} onPress={()=>this.props.navigation.replace('after_add')} key={11}>
         <Text style={{color:'white'}}>
           ارسال
         </Text>
@@ -455,7 +476,8 @@ dropdown: {
   backgroundColor:'white',
   borderWidth:0.5,
   width:'90%',
-  height:20,
+  //flexDirection:'row-reverse',
+  //height:20,
   marginHorizontal:'5%',
   borderRadius:5,
   marginTop:'2%',
@@ -490,29 +512,27 @@ search_input_2 :{
 },
 end_data : {
   backgroundColor:'white',
+  marginStart:'15%',
   borderWidth:0.5,
   height:50,
-  width:'48%',
- marginHorizontal:'2%',
- paddingHorizontal:'3%',
+  width:'50%',
   borderRadius:5,
   marginTop:'2%',
   alignItems:'center',
   justifyContent:'center',
+ 
   
 
  fontSize:10,
 },
 recive_time_style :{
-  backgroundColor:'white',
+
+  marginStart:'35%',
   borderWidth:0.5,
-  width:'48%',
-  height:20,
-  marginHorizontal:'2%',
+  width:'50%',
+  
   borderRadius:5,
   marginTop:'2%',
-  
-  paddingStart:'3%',
  fontSize:10,
 },
 map: {
@@ -541,7 +561,8 @@ radio_button_style:{
  //marginHorizontal:'5%',
  paddingHorizontal:'5%',
   alignItems:'center',
-  justifyContent:'flex-start',
+ 
+  flexDirection:'row'
  
 },
 label_style:{
@@ -550,9 +571,10 @@ label_style:{
 selection_style:{
   width:'90%',height:50,
   marginHorizontal:'5%',
-  backgroundColor:'#ACCEF7',
+  backgroundColor:'#B99C28',
   justifyContent:'center',alignItems:'center',
   borderRadius:10,
+ marginVertical:'5%'
 
 }
 })

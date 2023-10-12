@@ -13,7 +13,7 @@ function MyTabs() {
   return (
     <Tab.Navigator screenOptions={{
       tabBarStyle : {
-        height:80,
+        height:"10%",
         justifyContent:'center',
         alignItems:'center',
         borderTopRightRadius:25,
@@ -31,47 +31,47 @@ function MyTabs() {
    
     }} >
       <Tab.Screen name="Home" component={Home}  options={{ headerShown: false ,
-        tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#F1C40F':'black',fontSize:8,marginBottom:'15%'}}>الرئيسية </Text>)},
+        tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#B99C28':'black',fontSize:8,marginBottom:'15%'}}>الرئيسية </Text>)},
          tabBarIcon: ({ focused, size }) => {
         return (
-         <Feather name="home" size={20} color={focused ? '#F1C40F':"black"}  />
+         <Feather name="home" size={20} color={focused ? '#B99C28':"black"}  />
       
       )
       },
        }}/>
      <Tab.Screen name="search" component={Search} options={{ headerShown: false,
-         tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#F1C40F':'black',fontSize:8,marginBottom:'15%'}}>البحث </Text>)},
+         tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#B99C28':'black',fontSize:8,marginBottom:'15%'}}>البحث </Text>)},
          tabBarIcon: ({ focused, size }) => {
         return (
-        <Feather name="search" size={20} color={focused ? '#F1C40F':"black"} />
+        <Feather name="search" size={20} color={focused ? '#B99C28':"black"} />
       
       )
       },
      }} />
       <Tab.Screen name="akremha" component={Akremha}  options={{ headerShown: false ,
-             tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#F1C40F':'black',fontSize:10,marginBottom:'15%'}}>اكرمها </Text>)},
+             tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#B99C28':'black',fontSize:10,marginBottom:'15%'}}>اكرمها </Text>)},
              tabBarIconStyle:{
              marginTop:'10%'
              },
              tabBarIcon: ({ focused, size }) => {
             return (
-              <AntDesign name="pluscircle" size={40} color="#F1C40F"    />
+              <AntDesign name="pluscircle" size={40} color="#B99C28"    />
           )
           },
       }}/>
        <Tab.Screen name="list" component={List}  options={{ headerShown: false,
-           tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#F1C40F':'black',fontSize:8,marginBottom:'15%'}}>القوائم </Text>)},
+           tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#B99C28':'black',fontSize:8,marginBottom:'15%'}}>القوائم </Text>)},
          tabBarIcon: ({ focused, size }) => {
         return (
-          <FontAwesome5 name="file-alt" size={20}color={focused ? '#F1C40F':"black"}  />
+          <FontAwesome5 name="file-alt" size={20}color={focused ? '#B99C28':"black"}  />
       )
       },
        }}/>
        <Tab.Screen name="message" component={Message} options={{ headerShown: false,
-             tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#F1C40F':'black',fontSize:8,marginBottom:'15%'}}>الرسائل </Text>)},
+             tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#B99C28':'black',fontSize:8,marginBottom:'15%'}}>الرسائل </Text>)},
              tabBarIcon: ({ focused, size }) => {
             return (
-              <MaterialIcons name="mail-outline" size={20} color={focused ? '#F1C40F':"black"}  />
+              <MaterialIcons name="mail-outline" size={20} color={focused ? '#B99C28':"black"}  />
           )
           },
         }}

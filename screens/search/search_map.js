@@ -59,7 +59,10 @@ import MapView from 'react-native-maps';
               }}
            />
 </View>
-       
+<View style ={styles.back_action}>
+      
+        <Feather name="list" size={20} color="white" onPress={()=> this.props.navigation.goBack()} />
+        </View> 
 <ScrollView horizontal 
            
            style={{height:50, width:'100%',position:'absolute',top:'12%'}}
@@ -180,4 +183,18 @@ import MapView from 'react-native-maps';
      ,justifyContent:'center',alignItems:'center',backgroundColor:'white'},
      gps_style:{flexDirection:'row',marginVertical:'5%',justifyContent:'flex-start',
      alignItems:'center',width:'90%',marginHorizontal:'5%'},
+     back_action:{
+        backgroundColor:'#B99C28',
+        width:40,height:40,
+        justifyContent:'center',alignItems:'center',
+        borderWidth:1,
+        borderRadius:10,
+        right:'100%',
+        borderColor:'#B99C28',
+        position:'absolute',
+        top:'85%',
+        right:'90%',
+        left:'10%',
+        bottom:'15%'
+     }
  })

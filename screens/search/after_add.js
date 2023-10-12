@@ -32,7 +32,7 @@ import * as Linking from 'expo-linking';
 
   toggle =()=>{
     //this.setState({visible:!this.state.visible})
-    this.props.navigation.goBack()
+    this.props.navigation.replace('tabs')
   }
 
 componentDidMount(){
@@ -143,7 +143,7 @@ hand_style :{
 selection_style:{
   width:'90%',height:50,
   marginHorizontal:'5%',
-  backgroundColor:'#ACCEF7',
+  backgroundColor:'#B99C28',
   justifyContent:'center',alignItems:'center',
   borderRadius:10,
   marginTop:'3%'
@@ -154,7 +154,7 @@ selection_style_1:{
         width:'90%',height:50,
         marginHorizontal:'5%',
         backgroundColor:'white',
-        borderColor:'#ACCEF7',
+        borderColor:'#B99C28',
         borderWidth:1,
         justifyContent:'center',alignItems:'center',
         borderRadius:10,
