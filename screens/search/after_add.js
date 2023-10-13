@@ -56,17 +56,17 @@ componentWillUnmount(){
        
 
         <Image source={require('../../images/food3.jpg')} style={styles.image_style} />
-        <View style={{width:50,height:50,borderRadius:100,marginVertical:'5%',
+        <View style={{width:50,height:50,borderRadius:100,marginTop:'5%',
             justifyContent:'center',alignItems:'center',borderWidth:0.5,borderColor:'black'}}>
         <Image source={require('../../images/hand.jpg')} style={styles.hand_style} />
         </View>
         
-        <View style={{marginVertical:'5%'}}>
+        <View style={{marginTop:'5%'}}>
             <Text style={{fontSize:16,fontWeight:'800'}}>
                 اضفت عرض بنجاح ،نشكر طيب كرمك
             </Text>
         </View>
-        <View style={{marginVertical:'5%'}}>
+        <View style={{marginVertical:'5%',height:100}}>
             <Text style={{fontSize:12,fontWeight:'400'}}>
                 تم اضافة العرض بنجاح،يمكنك الان تلقي الطلبات في الرسائل 
             </Text>
@@ -128,7 +128,7 @@ componentWillUnmount(){
   },
   image_style :{
     width:'100%',
-    height:300,
+    height:'35%',
     borderTopLeftRadius:10,
     borderTopRightRadius:10,
    
@@ -146,7 +146,7 @@ selection_style:{
   backgroundColor:'#B99C28',
   justifyContent:'center',alignItems:'center',
   borderRadius:10,
-  marginTop:'3%'
+  marginVertical:'3%',
 
 },
 selection_style_1:{
@@ -158,7 +158,7 @@ selection_style_1:{
         borderWidth:1,
         justifyContent:'center',alignItems:'center',
         borderRadius:10,
-        marginTop:'3%'
+       
       
       
 }

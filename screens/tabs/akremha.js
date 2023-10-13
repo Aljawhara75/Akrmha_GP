@@ -20,6 +20,7 @@ import * as Linking from 'expo-linking';
             food_type:'',
             open: false,
             time_open:false,
+            image_open:false,
             value: null,
             time_value:null,
             quantity_number:0,
@@ -28,7 +29,7 @@ import * as Linking from 'expo-linking';
    mood:'',
    uri:'',
    selected_uri:false,
-            food_items :[{   name : 'منزلي '}, 
+            food_items :[{   label : 'منزلي ',value:'8'}, 
             {label :'مطاعم',value:'1', },
             {label :'خضراوات و فواكه', value:'2'},
             {label :'مشتقات الالبان',value:'3'},
@@ -47,7 +48,11 @@ import * as Linking from 'expo-linking';
             selected_radio:'',
             yes_selected:false,
             no_selected:true,
-            maybe_selected:false
+            maybe_selected:false,
+            camera_options :[{   label : 'التقاط صورة من الكامرة ',value:'1'}, 
+            {label :'اختيار صورة من المعرض',value:'2', },
+            ],
+            image_value:'ارفاق صور العرض',
         
         }
        I18nManager.allowRTL(true);
@@ -57,18 +62,30 @@ import * as Linking from 'expo-linking';
       }
        pickImage = async () => {
         // No permissions request is necessary for launching the image library
-        let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
+        let result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images = "Images",
           allowsEditing: false,
           aspect: [4, 3],
           quality: 1,
         });
-    
-       
-    
+   
         if (!result.canceled) {
-        //  setImage(result.assets[0].uri);
-          this.setState({uri:result.assets[0].uri ,selected_uri:true})
+        
+          this.setState({uri:result.assets[0].uri ,selected_uri:true,image_value:"تم ارفاق الصور بنجاح"})
+        }
+      };
+      select_image = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images = "Images",
+          allowsEditing: false,
+          aspect: [4, 3],
+          quality: 1,
+        });
+   
+        if (!result.canceled) {
+        
+          this.setState({uri:result.assets[0].uri ,selected_uri:true,image_value:"تم ارفاق الصور بنجاح"})
         }
       };
       go_tolink =()=>{
@@ -101,6 +118,7 @@ import * as Linking from 'expo-linking';
       value: callback(state.value)
     }));
   }
+
   time_setValue(callback) {
     this.setState(state => ({
       time_value: callback(state.time_value)
@@ -151,10 +169,10 @@ componentWillUnmount(){
           
         <View style={styles.card}>
         <ScrollView
-         key={this.state.quantity_number} style={styles.card_1}>
-
+         key={1} style={styles.card_1}>
+           <View key={1}>
          
-         <View style={styles.header} key={1}>
+         <View style={styles.header} >
           <View>
           <Text style={{fontSize:16,fontWeight:'800'}}>
             اضافة طعام
@@ -167,8 +185,8 @@ componentWillUnmount(){
              onPress={()=>{ 
                      this.props.navigation.replace('tabs')}}    />
          </View>
-         <View style={{marginTop:'3%',width:'100%'}} key={2}>
-          <Text style={{fontSize:12,fontWeight:'600',marginStart:'5%'}}>
+         <View style={{marginTop:'5%',width:'100%'}} >
+          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%'}}>
             اسم العرض <Text style={{color:'red'}}>*</Text>
           </Text>
           <TextInput placeholder=" رز بالدجاج ومعكرونة"
@@ -178,8 +196,8 @@ componentWillUnmount(){
            style ={styles.search_input}
             />
          </View>
-         <View style={{marginTop:'3%',width:'100%'}} key={3}>
-          <Text style={{fontSize:12,fontWeight:'600',marginStart:'5%'}}>
+         <View style={{marginTop:'5%',width:'100%'}} >
+          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%'}}>
             نوع الطعام  <Text style={{color:'red'}}>*</Text>
           </Text>
           <DropDownPicker
@@ -201,13 +219,14 @@ componentWillUnmount(){
               scrollViewProps={{
                 nestedScrollEnabled: true,
         }}
+        itemKey="value"
             //  onChangeValue={onChange}
             //  zIndex={3000}
              // zIndexInverse={1000}
             />
          </View>
-         <View style={{marginTop:'10%',width:'100%'}} key={4}>
-          <Text style={{fontSize:12,fontWeight:'600',marginStart:'5%'}}>
+         <View style={{marginTop:'5%',width:'100%'}} >
+          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%'}}>
             وصف الطعام  <Text style={{color:'gray'}}>(اختياري)</Text>
           </Text>
           <TextInput placeholder=" يرجى توضيح الطعام ووصفه بشكل مفصل ,مثل المكونات والنكهات والمدة "
@@ -217,8 +236,8 @@ componentWillUnmount(){
            style ={styles.search_input_2}
             />
          </View>
-         <View style={{marginTop:'3%',width:'100%'}} key={5}>
-         <Text style={{fontSize:12,fontWeight:'600',marginStart:'5%'}}>
+         <View style={{marginTop:'5%',width:'100%'}} >
+         <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%'}}>
             الكمية المتاحة   <Text style={{color:'red'}}>*</Text>
           </Text>
         <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center',width:'80%',marginHorizontal:'10%',marginTop:'3%'}}>
@@ -243,23 +262,24 @@ componentWillUnmount(){
           
         </View>
          </View>
-         <View style={{marginTop:'3%',width:'100%'}}key={6}>
-          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',width:'100%',}}>
-            <View style={{width:'45%',marginStart:'5%'}}>
-            <Text style={{fontSize:12,fontWeight:'600',}}>
+         <View style={{marginTop:'5%',width:'100%'}}>
+          <View style={{flexDirection:'row',alignItems:'center',
+          justifyContent:'space-between',width:'90%',marginHorizontal:'5%'}}>
+            <View style={{width:'45%',}}>
+            <Text style={{fontSize:12,fontWeight:'600',paddingHorizontal:'3%'}}>
             تاريخ الانتهاء   <Text style={{color:'red'}}>*</Text>
           </Text>
             </View>
 
-            <View style={{width:'45%',marginEnd:'2%'}}>
+            <View style={{width:'45%',}}>
           <Text style={{fontSize:12,fontWeight:'600'}}>
             وقت الاستلام   <Text style={{color:'red'}}>*</Text>
           </Text>
           </View>
           </View>
 
-        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-around',
-        width:'90%',marginHorizontal:'5%'}}>
+        <View style={{flexDirection:'row',alignItems:'center',
+        width:'90%',marginTop:'1%',marginHorizontal:'4%'}}>
         <TouchableHighlight
         onPress={()=>this.showMode()}
         style ={styles.end_data}
@@ -282,7 +302,7 @@ componentWillUnmount(){
                listItemContainerStyle={{backgroundColor:'red',justifyContent:'center',alignItems:'center',width:'100%'}}
               // listItemLabelStyle ={{backgroundColor:'green',justifyContent:'center'}}
                listParentContainerStyle={{backgroundColor:'white',justifyContent:'center',alignItems:'center'}}
-               dropDownContainerStyle={{width:180,marginLeft:60,justifyContent:'center',alignItems:'center'}}
+               dropDownContainerStyle={{width:180,justifyContent:'center',alignItems:'center'}}
               value={this.state.time_value} //genderValue
               items={this.state.time_items}
               setOpen={ ()=>this.setState({time_open:false})}
@@ -291,6 +311,7 @@ componentWillUnmount(){
               placeholder=" حدد وقت الاستلام "
               placeholderStyle={styles.placeholderStyles}
               listMode="SCROLLVIEW"
+              itemKey="value"
               scrollViewProps={{
                 nestedScrollEnabled: true,
         }}
@@ -315,8 +336,8 @@ componentWillUnmount(){
           onChange={this.onChange}
         />
       )}
-         <View style={{marginTop:'3%',width:'100%'}} key={7}>
-          <Text style={{fontSize:12,fontWeight:'600',marginStart:'5%'}}>
+         <View style={{marginTop:'5%',width:'100%'}} key={7}>
+          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%'}}>
             مكان الاستلام   <Text style={{color:'gray'}}>(اختياري)</Text>
           </Text>
           <MapView style={styles.map} 
@@ -328,43 +349,58 @@ componentWillUnmount(){
               }}
            />
          </View >
-         <View style={{marginTop:'3%',width:'100%'}} key={8}>
-          <Text style={{fontSize:12,fontWeight:'600',marginStart:'5%'}}>
+      
+         <View style={{marginTop:'3%',width:'100%',height:70}} >
+          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%'}}>
             ارفاق الصور   <Text style={{color:'red'}}>*</Text>
           </Text>
-          <TouchableHighlight
-        onPress={()=>this.pickImage()}
-        style ={styles.pick_image}
-        >
-          <View style={{flexDirection:'row',justifyContent:'space-between',width:'100%',alignItems:'center'}}>
-          <Entypo name="attachment" size={15} color="black" style={{paddingRight:'5%'}} />
-          {
-            this.state.selected_uri?<Text style={{fontSize:12,color:'black',paddingLeft:'50%'}}>
-            تم ارفاق الصور    
-            </Text> :
-            <Text style={{fontSize:12,color:'black',paddingLeft:'50%'}}>
-            ارفاق صور العرض  
-            </Text>
-          }
-            
-   
-         <Entypo name="chevron-small-down" size={28} color="black" />
-          </View>
-       
-        </TouchableHighlight>
+          <DropDownPicker
+            listItemContainerStyle={{backgroundColor:'red',justifyContent:'center',alignItems:'center',width:'100%'}}
+             listItemLabelStyle ={{justifyContent:'center',marginTop:'5%',fontSize:14,fontWeight:'800'}}
+             listParentContainerStyle={{backgroundColor:'white',justifyContent:'center',alignItems:'center'}}
+             
+             dropDownContainerStyle={{width:'90%',marginHorizontal:'5%',height:100}}
+              style={styles.dropdown}
+              open={this.state.image_open}
+              value={this.state.image_value} //genderValue
+              items={this.state.camera_options}
+              setOpen={ ()=>this.setState({image_open:false})}
+             
+             onSelectItem={(item)=>{
+              if(item.value=='2'){
+                this.select_image()
+              }
+              else{
+                this.pickImage()
+              }
+
+             }}
+              placeholder= {this.state.image_value}
+        
+              placeholderStyle={{color:'black'}}
+              onOpen={()=>this.setState({image_open:!this.state.open,time_open:false,open:false})}
+              listMode="SCROLLVIEW"
+              scrollViewProps={{
+                nestedScrollEnabled: true,
+        }}
+        itemKey="value"
+            //  onChangeValue={onChange}
+            //  zIndex={3000}
+             // zIndexInverse={1000}
+            />
          </View>
-         <View  key={9} style={{flexDirection:'row',justifyContent:'center',alignItems:'center',width:'90%',marginHorizontal:'5%',marginTop:'3%'}}>
+         <View   style={{flexDirection:'row',justifyContent:'center',alignItems:'center',width:'90%',marginHorizontal:'5%',marginTop:'7%'}}>
              <Text style={{fontSize:12,fontWeight:'600',}}>
             هل يحتوي الطعام على مسببات الحساسية ؟       
           </Text>
           <TouchableHighlight onPress={()=>this.go_tolink()}>
-            <Text style={{fontSize:12,fontWeight:'400',marginStart:'5%',color:'#2E86C1'}}>
+            <Text style={{fontSize:12,fontWeight:'400',marginHorizontal:'5%',color:'#2E86C1'}}>
               الاطلاع على مسببات الحساسية
             </Text>
           </TouchableHighlight>
 
          </View>
-         <View style={{alignItems:'center',marginTop:'3%',}} key={10}>
+         <View style={{alignItems:'center',marginTop:'3%',}} >
          <RadioButton
          value="1"
          label="نعم"
@@ -409,6 +445,7 @@ componentWillUnmount(){
           ارسال
         </Text>
       </TouchableOpacity>
+      </View>
          </ScrollView>
         </View>
         
@@ -462,12 +499,14 @@ search_input :{
   
   backgroundColor:'white',
   borderWidth:0.5,
+  marginVertical:'3%',
   height:50,
   width:'90%',
   marginHorizontal:'5%',
   borderRadius:5,
-  marginTop:'2%',
-  paddingStart:'3%',
+ // paddingTop:'2%',
+  paddingHorizontal:'3%',
+
 
  fontSize:10,
 
@@ -476,11 +515,11 @@ dropdown: {
   backgroundColor:'white',
   borderWidth:0.5,
   width:'90%',
-  //flexDirection:'row-reverse',
+  flexDirection:'row',
   //height:20,
   marginHorizontal:'5%',
   borderRadius:5,
-  marginTop:'2%',
+  marginTop:'3%',
   //paddingStart:'3%',
  fontSize:10,
 },
@@ -500,37 +539,35 @@ search_input_2 :{
   backgroundColor:'white',
   
   borderWidth:0.5,
-  height:100,
+  height:90,
   width:'90%',
   marginHorizontal:'5%',
+  marginTop:'5%',
   borderRadius:5,
-  marginTop:'2%',
-  paddingStart:'3%',
-  paddingBottom:'10%',
+   paddingBottom:'10%',
+  paddingHorizontal:'5%',
+ textAlign:'right',
+  
  fontSize:10,
 
 },
 end_data : {
   backgroundColor:'white',
-  marginStart:'15%',
+  paddingHorizontal:'3%',
+  marginHorizontal:'3%',
   borderWidth:0.5,
   height:50,
-  width:'50%',
+  width:'45%',
   borderRadius:5,
   marginTop:'2%',
   alignItems:'center',
-  justifyContent:'center',
- 
-  
-
- fontSize:10,
+  justifyContent:'center', fontSize:10,
 },
 recive_time_style :{
-
-  marginStart:'35%',
   borderWidth:0.5,
-  width:'50%',
-  
+  width:'45%',
+  marginHorizontal:'3%',
+  flexDirection:'row',
   borderRadius:5,
   marginTop:'2%',
  fontSize:10,
@@ -549,7 +586,8 @@ pick_image : {
  marginHorizontal:'5%',
  paddingHorizontal:'3%',
   borderRadius:5,
-  marginTop:'2%',
+  marginTop:'4%',
+ 
   alignItems:'center',
   justifyContent:'center',
   
@@ -561,8 +599,9 @@ radio_button_style:{
  //marginHorizontal:'5%',
  paddingHorizontal:'5%',
   alignItems:'center',
- 
   flexDirection:'row'
+ 
+  //flexDirection:''
  
 },
 label_style:{
@@ -571,7 +610,8 @@ label_style:{
 selection_style:{
   width:'90%',height:50,
   marginHorizontal:'5%',
-  backgroundColor:'#B99C28',
+    backgroundColor:'#B99C28',
+  
   justifyContent:'center',alignItems:'center',
   borderRadius:10,
  marginVertical:'5%'

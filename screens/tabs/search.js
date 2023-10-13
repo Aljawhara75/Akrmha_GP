@@ -45,8 +45,9 @@ export default class Search extends Component {
                         <View style={styles.name_style}>
                             <View style={item.item.gernder=='m'?styles.profile_male:styles.profile_female}>
                                 {
+                                    
                                     item.item.gernder=='f'?<Fontisto name="female" size={20} color="black" />:
-                                    <Fontisto name="male" size={20} color="white" />
+                                    <Image source={require('../../images/application_image/male_profile.jpg')} style={styles.profile_image}/>
                                 }
                             </View>
                         <Text style={{fontSize:12,paddingHorizontal:'5%',color:'#5DADE2'}}>{item.item.name}</Text>
@@ -320,9 +321,14 @@ export default class Search extends Component {
      profile_male :{height:30,width:30,borderRadius:100,borderWidth:2,borderColor:'#5DADE2'
      ,justifyContent:'center',alignItems:'center',backgroundColor:'#3B3E3F'},
  
-     profile_female :{height:30,width:30,borderRadius:100,borderWidth:2,borderColor:'#5DADE2'
+     profile_female :{height:30,width:30,borderRadius:100,borderWidth:2,borderColor:'#B99C28'
      ,justifyContent:'center',alignItems:'center',backgroundColor:'white'},
      gps_style:{flexDirection:'row',marginVertical:'5%',justifyContent:'flex-start',
      alignItems:'center',width:'90%',marginHorizontal:'5%'},
+     profile_image:{
+        height:30,
+        width:30,
+        borderRadius:100
+     }
    
  })

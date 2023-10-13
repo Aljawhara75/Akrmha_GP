@@ -1,6 +1,6 @@
 import React,{Component}  from "react";
 import { StyleSheet, Text, View ,TextInput ,TouchableWithoutFeedback ,Image
-    ,ScrollView ,TouchableOpacity ,FlatList} from 'react-native';
+    ,ScrollView ,TouchableOpacity ,FlatList,SafeAreaView} from 'react-native';
 import { Feather,AntDesign ,FontAwesome5 ,MaterialIcons ,MaterialCommunityIcons ,Entypo,Ionicons,
     Fontisto
 } from '@expo/vector-icons';
@@ -16,12 +16,11 @@ import MapView from 'react-native-maps';
 
     render() {
         return(
-            <View style ={styles.container}> 
+            <ScrollView>
+            < SafeAreaView style ={styles.container}> 
             <View style={styles.header}>
             <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-            <View style={styles.profile_male}>                 
-            <Fontisto name="male" size={25} color="white" />      
-                            </View>
+            <Image source={require('../../images/application_image/male_profile.jpg')} style={styles.profile_image}/>
             <View style={{paddingHorizontal:'3%'}}>
                 <Text style={{fontSize:12,color:'black'}}>
                 عبدالرحمن السهلي 
@@ -38,29 +37,30 @@ import MapView from 'react-native-maps';
                
             </View>
             </View>
-          <View style={{justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
+          <TouchableOpacity onPress={()=>{ this.props.navigation.goBack()}}
+          style={{justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
             <Text style={{paddingHorizontal:'3%'}}>
                 الرئيسية
             </Text>
-            <Feather name="arrow-left" size={24} color="black" />
-          </View>
+            <Feather name="arrow-left" size={24} color="black"  />
+          </TouchableOpacity>
             </View>
          <View style={styles.card_view}>
          <Image source={this.state.image} style={styles.image_style} />
-         <View style={{justifyContent:'space-between',alignItems:'center',flexDirection:'row',width:'90%',marginHorizontal:'5%',marginVertical:'5%'}}>
+         <View style={{justifyContent:'space-between',alignItems:'center',flexDirection:'row',width:'90%',marginHorizontal:'5%',marginTop:'5%'}}>
             <Text style={{color:'black',fontSize:14,fontWeight:'bold'}}>
                 وجبة برجر جاهزة عدد 2
             </Text>
-            <View style={{justifyContent:'center',alignItems:'center',flexDirection:'row',backgroundColor:'#FAE5D3',borderRadius:10,height:40,width:70}}>
-            <Ionicons name="fast-food" size={18} color="red" style={{padding:'5%'}} />
-            <Text style={{fontSize:12,padding:'10%'}}>
-                مطاعم
-            </Text>
-            </View>
+            <Image source={require('../../images/application_image/resturant.jpg')} style={styles.type_image}/>
          </View>
          <View style ={{width:'90%',marginHorizontal:'5%',justifyContent:'flex-start',marginVertical:'3%'}}>
          <Text style={{fontSize:12,}}>
                 الكمية المتاحة :2 وجبة
+            </Text>
+         </View>
+         <View style ={{width:'90%',marginHorizontal:'5%',justifyContent:'flex-start',marginVertical:'3%'}}>
+         <Text style={{fontSize:12,}}>
+                  مسبب للحساسية : لا 
             </Text>
          </View>
          <View style ={{width:'90%',marginHorizontal:'5%',justifyContent:'flex-start',marginVertical:'3%'}}>
@@ -94,8 +94,39 @@ import MapView from 'react-native-maps';
            />
          </View>
         
-        
+         <View style={styles.footer}>
+            <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+            <View style={styles.profile_male}>                 
+            <Fontisto name="male" size={25} color="white" />      
+                            </View>
+            <View style={{marginHorizontal:'5%'}}>
+                <Text style={{fontSize:16,color:'black',fontWeight:'900',paddingHorizontal:'3%'}}>
+                ابراهيم  
+                </Text>
+                <View style={{flexDirection:'row', justifyContent:'center',alignItems:'center'}}>
+                
+                <MaterialCommunityIcons name="map-marker-outline" size={20} color="black" />
+                <Text style={{fontSize:10,paddingVertical:'1%'}}>1.4 كم</Text>
+              
+                </View>
+               
             </View>
+            </View>
+          <View style={{justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
+            <Text style={{paddingHorizontal:'3%',color:'#5DADE2'}}>
+                الطلب الان
+            </Text>
+            <TouchableOpacity style={{width:100,height:30,justifyContent:'center',alignItems:'center',
+            borderRadius:10,backgroundColor:'#B99C28'}}>
+            <Text style={{paddingHorizontal:'3%',color:'white',fontSize:12}}>
+                مراسلة ابراهيم 
+            </Text>
+            </TouchableOpacity>
+         
+          </View>
+            </View>
+            </SafeAreaView>
+            </ScrollView>
         )
     }
  } 
@@ -104,7 +135,8 @@ import MapView from 'react-native-maps';
 flex:1,
 justifyContent:'center',
 alignItems:'center',
-backgroundColor:'white'
+backgroundColor:'white',
+
     },
     header:{
         flexDirection:'row',
@@ -115,7 +147,7 @@ backgroundColor:'white'
         paddingHorizontal:'5%',
         marginTop:'10%'
     },
-    profile_male :{height:35,width:35,borderRadius:100,borderWidth:2,borderColor:'#5DADE2'
+    profile_male :{height:40,width:40,borderRadius:100,borderWidth:2,borderColor:'#B99C28'
     ,justifyContent:'center',alignItems:'center',backgroundColor:'#3B3E3F'},
     card_view : {
         width:'80%',marginHorizontal:'10%',
@@ -137,5 +169,25 @@ backgroundColor:'white'
         width: '90%',
         height: 250,
       },
+      type_image:{
+        height:80,
+        width:50,
+        borderRadius:25
+     },
+     footer:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        height:50,
+        width:'100%',
+        backgroundColor:'white',
+        paddingHorizontal:'5%',
+        marginBottom:'5%'
+      
+    },
+    profile_image:{
+        height:40,
+        width:40,
+        borderRadius:100
+     }
 
  })
