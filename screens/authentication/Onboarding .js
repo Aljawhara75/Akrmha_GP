@@ -8,11 +8,11 @@ import {
   Animated,
   Touchable,
 } from "react-native";
-import Slides from "../components/Slides";
-import OnboardingItem from "../components/OnboardingItem";
-import Paginator from "../components/Paginator";
-// import Login from './components/Login'; // Check the relative path
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import slides from "./slides";
+import OnboardingItem from "./onBoardingItem";
+import Paginator from "./pagitor";
+
+
 import { TouchableOpacity } from "react-native";
 
 export default function Onboarding({ navigation }) {
@@ -30,7 +30,7 @@ export default function Onboarding({ navigation }) {
     <View style={styles.container}>
       <View style={{ flex: 3 }}>
         <FlatList
-          data={Slides}
+          data={slides}
           renderItem={({ item }) => <OnboardingItem item={item} />}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -48,20 +48,20 @@ export default function Onboarding({ navigation }) {
         />
       </View>
 
-      <View style={{ alignItems: "center" }}>
-        <Paginator data={Slides} scrollX={scrollX} />
+      <View style={{ alignItems: "center" ,}}>
+        <Paginator data={slides} scrollX={scrollX} />
       </View>
       <View>
         <TouchableOpacity
           style={styles.loginButton}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => navigation.navigate("tabs")}
         >
           <Text
             style={{
               color: "white",
               textAlign: "center",
               fontWeight: "400",
-              fontSize: 20,
+              fontSize: 14,
             }}
           >
             تسجيل الدخول
@@ -69,14 +69,14 @@ export default function Onboarding({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.registerButton}
-          onPress={() => navigation.navigate("Register")}
+          onPress={() => navigation.navigate("splash")}
         >
           <Text
             style={{
               color: "#B99C28",
               textAlign: "center",
               fontWeight: "400",
-              fontSize: 20,
+              fontSize: 14,
             }}
           >
             إنشاء حساب
@@ -90,27 +90,39 @@ export default function Onboarding({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F7F9F9",
     //alignItems: 'center',
     justifyContent: "center",
   },
 
   registerButton: {
-    padding: 18,
+  //  padding: 18,
+  justifyContent:'center',alignItems:'center',
     borderColor: "#B99C28",
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 10,
-    marginTop: 10,
-    marginBottom: 80,
-    marginLeft: 18,
-    marginRight: 18,
+//marginTop: 10,
+   // marginBottom: 80,
+   // marginLeft: 18,
+   // marginRight: 18,
+   width:'90%',
+   height:50,
+   marginHorizontal:'5%',
+   //marginVertical:'2%',
+   marginBottom:'5%'
   },
 
   loginButton: {
     backgroundColor: "#B99C28",
-    padding: 18,
+    justifyContent:'center',alignItems:'center',
+   // padding: 18,
     borderRadius: 10,
-    marginLeft: 18,
-    marginRight: 18,
+  //  marginLeft: 18,
+   // marginRight: 18,
+    width:'90%',
+    height:50,
+   marginHorizontal:'5%',
+   marginVertical:'2%',
+  
   },
 });

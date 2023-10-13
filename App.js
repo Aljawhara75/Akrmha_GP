@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-
+import { Splash ,Onboarding } from './screens/authentication';
 import { Akremha,List ,Message,Home,Search } from './screens/tabs';
 import { Search_Map,Food_offer } from './screens/search';
 import After_add from './screens/search/after_add';
@@ -87,11 +87,13 @@ export default function App() {
   return (
     
     <NavigationContainer>
-    <Stack.Navigator initialRouteName="tabs">
+    <Stack.Navigator initialRouteName="splash">
       <Stack.Screen name="tabs" component={MyTabs}  options={{ headerShown: false }} />
       <Stack.Screen name="search_map" component={Search_Map}  options={{ headerShown: false }} />
       <Stack.Screen name="food_offer" component={Food_offer}  options={{ headerShown: false }} />
       <Stack.Screen name="after_add" component={After_add}  options={{ headerShown: false }} />
+      <Stack.Screen name="splash" component={Splash}  options={{ headerShown: false }} />
+      <Stack.Screen name="onboarding" component={Onboarding}  options={{ headerShown: false }} />
     </Stack.Navigator>
   </NavigationContainer>
 
