@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+//import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View,TouchableHighlight,Platform } from 'react-native';
 import { Feather,AntDesign ,FontAwesome5 ,MaterialIcons} from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,6 +11,7 @@ import { Search_Map,Food_offer } from './screens/search';
 import After_add from './screens/search/after_add';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+const platform =Platform.OS === 'ios'?true:false
 function MyTabs() {
   return (
     <Tab.Navigator screenOptions={{
@@ -25,59 +26,73 @@ function MyTabs() {
       tabBarHideOnKeyboard:'true',
       tabBarIconStyle:{
   
-  // marginVertical:'10%'
+   marginVertical:'10%'
       },
    
    
     }} >
-      <Tab.Screen name="Home" component={Home}  options={{ headerShown: false ,
-    
-        tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',}}>الرئيسية </Text>)},
-         tabBarIcon: ({ focused, size }) => {
-        return (
-         <Feather name="home" size={20} color={focused ? '#B99C28':"black"} style={{marginTop:'30%',position:'absolute',top:'10%'}} />
-      
-      )
-      },
-       }}/>
-     <Tab.Screen name="search" component={Search} options={{ headerShown: false,
-         tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',}}>البحث </Text>)},
-         tabBarIcon: ({ focused, size }) => {
-        return (
-        <Feather name="search" size={20} color={focused ? '#B99C28':"black"} style={{marginTop:'30%',position:'absolute',top:'10%'}}/>
-      
-      )
-      },
-     }} />
-      <Tab.Screen name="akremha" component={Akremha}  options={{ headerShown: false ,
-             tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',}}>اكرمها </Text>)},
-             tabBarIconStyle:{
-             marginTop:'10%'
-             },
-             tabBarIcon: ({ focused, size }) => {
-            return (
-              <AntDesign name="pluscircle" size={40} color="#B99C28"  style={{position:'absolute'}} />
-          )
-          },
-      }}/>
-       <Tab.Screen name="list" component={List}  options={{ headerShown: false,
-           tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',}}>القوائم </Text>)},
-         tabBarIcon: ({ focused, size }) => {
-        return (
-          <FontAwesome5 name="file-alt" size={20}color={focused ? '#B99C28':"black"} style={{marginTop:'30%',position:'absolute',top:'10%'}} />
-      )
-      },
-       }}/>
+   
+  
+   
        <Tab.Screen name="message" component={Message} options={{ headerShown: false,
-             tabBarLabel: ({focused})=>{return(<Text style ={{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',}}>الرسائل </Text>)},
+             tabBarLabel: ({focused})=>{return(<Text style ={ Platform.OS === 'ios'?{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'10%',
+              paddingTop:'25%'}:{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'1%',
+              paddingTop:'1%'} }>الرسائل </Text>)},
              tabBarIcon: ({ focused, size }) => {
             return (
-              <MaterialIcons name="mail-outline" size={20} color={focused ? '#B99C28':"black"} style={{marginTop:'30%',position:'absolute',top:'10%'}} />
+              <MaterialIcons name="mail-outline" size={20} color={focused ? '#B99C28':"black"} style={{position:'absolute',top:15}} />
           )
           },
         }}
 
         />
+            <Tab.Screen name="list" component={List}  options={{ headerShown: false,
+           tabBarLabel: ({focused})=>{return(<Text style ={ Platform.OS === 'ios'?{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'10%',
+              paddingTop:'25%'}:{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'1%',
+              paddingTop:'1%'} }>القوائم </Text>)},
+         tabBarIcon: ({ focused, size }) => {
+        return (
+          <FontAwesome5 name="file-alt" size={20}color={focused ? '#B99C28':"black"}style={{position:'absolute',top:15}}/>
+      )
+      },
+       }}/>
+        
+      <Tab.Screen name="akremha" component={Akremha}  options={{ headerShown: false ,
+             tabBarLabel: ({focused})=>{return(<Text style ={ Platform.OS === 'ios'?{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'10%',
+              paddingTop:'25%'}:{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'1%',
+              paddingTop:'1%'} }>اكرمها </Text>)},
+             tabBarIconStyle:{
+             marginTop:'10%'
+             },
+             tabBarIcon: ({ focused, size }) => {
+            return (
+              <AntDesign name="pluscircle" size={40} color="#B99C28"  style={{position:'absolute',top:-5}} />
+          )
+          },
+      }}/>
+           <Tab.Screen name="search" component={Search} options={{ headerShown: false,
+         tabBarLabel: ({focused})=>{return(<Text style ={ Platform.OS === 'ios'?{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'10%',
+              paddingTop:'25%'}:{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'1%',
+              paddingTop:'1%'} }>البحث </Text>)},
+         tabBarIcon: ({ focused, size }) => {
+        return (
+        <Feather name="search" size={20} color={focused ? '#B99C28':"black"}  style={{position:'absolute',top:15}}/>
+      
+      )
+      },
+     }} />
+           <Tab.Screen name="Home" component={Home}  options={{ headerShown: false ,
+    
+        tabBarLabel: ({focused})=>{return(<Text style ={ Platform.OS === 'ios'?{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'10%',
+              paddingTop:'25%'}:{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'1%',
+              paddingTop:'1%'} }>الرئيسية </Text>)},
+         tabBarIcon: ({ focused, size }) => {
+        return (
+         <Feather name="home" size={20} color={focused ? '#B99C28':"black"} style={{position:'absolute',top:15}} />
+      
+      )
+      },
+       }}/>
      
     </Tab.Navigator>
   );
@@ -86,7 +101,7 @@ function MyTabs() {
 export default function App() {
   return (
     
-    <NavigationContainer>
+   <NavigationContainer>
     <Stack.Navigator initialRouteName="splash">
       <Stack.Screen name="tabs" component={MyTabs}  options={{ headerShown: false }} />
       <Stack.Screen name="search_map" component={Search_Map}  options={{ headerShown: false }} />

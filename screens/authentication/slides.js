@@ -23,7 +23,7 @@ export default [
     id: "3",
     title: "المتبرع والمستفيد معًا في شكر النعمة",
     description:
-      "كونوا ممن تعاونوا على البر والتقوى                                     #أكرمها لتدوم",
+      "كونوا ممن تعاونوا على البر والتقوى                                              #أكرمها لتدوم",
     image: require("../../images/application_image/therd.jpg"),
   },
 ];

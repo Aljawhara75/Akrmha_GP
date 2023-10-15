@@ -74,50 +74,9 @@ componentDidMount(){
  //justifyContent: "center",
     alignItems: "center",
     borderTopRightRadius:25,
-    borderTopLeftRadius:25
+    borderTopLeftRadius:25,
+    
+  
   },
-  card_1 : {
-    backgroundColor: "#fff",
-    height: '100%',
-    width:'100%',
  
-    borderTopRightRadius:25,
-    borderTopLeftRadius:25
-  },
-  image_style :{
-    width:'100%',
-    height:'35%',
-    borderTopLeftRadius:10,
-    borderTopRightRadius:10,
-   
-},
-hand_style :{
-    width:40,
-    height:40,
-   borderRadius:100
-   
-},
- 
-selection_style:{
-  width:'90%',height:50,
-  marginHorizontal:'5%',
-  backgroundColor:'#B99C28',
-  justifyContent:'center',alignItems:'center',
-  borderRadius:10,
-  marginVertical:'3%',
-
-},
-selection_style_1:{
-   
-        width:'90%',height:50,
-        marginHorizontal:'5%',
-        backgroundColor:'white',
-        borderColor:'#B99C28',
-        borderWidth:1,
-        justifyContent:'center',alignItems:'center',
-        borderRadius:10,
-       
-      
-      
-}
 })

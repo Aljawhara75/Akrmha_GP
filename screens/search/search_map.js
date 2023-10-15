@@ -8,15 +8,18 @@ import MapView from 'react-native-maps';
        
         this.state={
           search_text:'',
-          food_items :[{ key :1,   name : 'منزلي '}, 
-          {key:2,name :'مطاعم' },
-          {key:3,name :'خضراوات و فواكه'},
-          {key:4,name :'مشتقات الالبان'},
-          {key:5,name :'اللحوم'},
-          {key:6,name :'معلبات'},
-          {key:7,name :'مخبوزات'},
-          {key:8,name :'المشروبات'},],
-          food_data :[
+          food_items :[{key:1,name :'المشروبات'},
+           {key:2,name :'مخبوزات'},
+            {key:3,name :'معلبات'},
+            {key:4,name :'اللحوم'},
+                {key:5,name :'مشتقات الالبان'},
+                  {key:6,name :'خضراوات و فواكه'},
+                    {key:7,name :'مطاعم' },
+                      { key :8,   name : 'منزلي '}, 
+     
+         
+          ],
+         food_data :[
             {id:'1',name :'سناء',image :require('../../images/food1.jpg'),discreption:'وجبة طعام لذيذة للمشاركة',gernder:'f',gps_point:'1.2'},
             {id:'2',name :'خالد',image :require('../../images/food2.jpg'),discreption:'وجبة ارز مع قطع الدجاج',gernder:'m',gps_point:'1.2'},
             {id:'3',name :'عبدالرحمن',image :require('../../images/food3.jpg'),discreption:'وجبة ارز مع قطع لحم',gernder:'m',gps_point:'1.2'},
@@ -25,6 +28,7 @@ import MapView from 'react-native-maps';
             {id:'6',name :'ياسر',image :require('../../images/food3.jpg'),discreption:'وجبة خضار لذيذة',gernder:'m',gps_point:'1.2'},
 
         ]
+      
            
     }
     }
@@ -64,8 +68,8 @@ import MapView from 'react-native-maps';
         <Feather name="list" size={20} color="white" onPress={()=> this.props.navigation.goBack()} />
         </View> 
 <ScrollView horizontal 
-           
-           style={{height:50, width:'100%',position:'absolute',top:'12%'}}
+      
+           style={{height:50, width:'100%',position:'absolute',top:'12%',textAlign:'right',  alignSelf:'flex-end'}}
                >
                    {
                    this.state.food_items.map(item =>(
@@ -97,7 +101,7 @@ import MapView from 'react-native-maps';
         height: '90%',
       },
      search_bar:{
-         flexDirection:'row',
+         flexDirection:'row-reverse',
          backgroundColor:'white',
          alignItems:'center',
          justifyContent:'center',
@@ -111,12 +115,14 @@ import MapView from 'react-native-maps';
          borderWidth:1,
          height:40,
          width:'90%',
-         marginStart:'10%',
+         marginRight:'10%',
          borderRadius:10,
-        paddingStart:'5%',
-        paddingEnd:'20%',
+         paddingRight:'3%',
+       // paddingStart:'5%',
+        //paddingEnd:'20%',
         fontSize:14,
-        fontWeight:'bold'
+        fontWeight:'bold',
+        textAlign:'right'
         
      
         
@@ -142,7 +148,9 @@ import MapView from 'react-native-maps';
        paddingLeft:30,
        marginVertical:'3%',
         height:50,
-        backgroundColor:'white'
+        backgroundColor:'white',
+         flexDirection:'row-reverse',
+
      },
      map_style:{
          flexDirection:'row',
@@ -192,9 +200,9 @@ import MapView from 'react-native-maps';
         right:'100%',
         borderColor:'#B99C28',
         position:'absolute',
-        top:'85%',
-        right:'90%',
-        left:'10%',
-        bottom:'15%'
+        top:'80%',
+        right:'20%',
+        left:'80%',
+        bottom:'20%'
      }
  })

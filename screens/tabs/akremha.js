@@ -1,5 +1,5 @@
 import React,{Component}  from "react";
-import { StyleSheet, Text, View  ,TextInput ,TouchableOpacity,TouchableHighlight,ScrollView,I18nManager } from 'react-native';
+import { StyleSheet, Text, View  ,TextInput ,TouchableOpacity,TouchableHighlight,SafeAreaView,ScrollView,I18nManager ,Platform} from 'react-native';
 import { BottomSheet , RadioGroup, RadioButtonProps ,RadioButton} from "react-native-btr";
 import { Feather,AntDesign ,FontAwesome5 ,MaterialIcons ,MaterialCommunityIcons ,Entypo,
   Fontisto
@@ -13,7 +13,7 @@ import * as Linking from 'expo-linking';
   constructor(props){
     super(props)
         this.state={
-             food_type:'',
+           
              time :'',
             visible:true,
             time_visble:true,
@@ -53,10 +53,12 @@ import * as Linking from 'expo-linking';
             {label :'اختيار صورة من المعرض',value:'2', },
             ],
             image_value:'ارفاق صور العرض',
+            platform:Platform.OS === 'ios'?true:false,
         
         }
        I18nManager.allowRTL(true);
       I18nManager.forceRTL(true);
+     // I18nManager.isRTL()
         this.setValue = this.setValue.bind(this);
         this.time_setValue = this.time_setValue.bind(this);
       }
@@ -151,7 +153,7 @@ import * as Linking from 'expo-linking';
     this.setState({mood:'data'})
   };
 componentDidMount(){
-  this.setState({visible:true})
+ // this.setState({visible:true})
 }
 componentWillUnmount(){
 
@@ -160,7 +162,7 @@ componentWillUnmount(){
     render() {
 
         return(
-            <View > 
+            <SafeAreaView > 
                <BottomSheet
         visible={true}
         onBackButtonPress={ ()=>this.toggle()}
@@ -171,13 +173,13 @@ componentWillUnmount(){
         <ScrollView
          key={1} style={styles.card_1}>
            <View key={1}>
-         
+       
          <View style={styles.header} >
           <View>
-          <Text style={{fontSize:16,fontWeight:'800'}}>
+          <Text style={{fontSize:16,fontWeight:'800',textAlign:'right',}}>
             اضافة طعام
           </Text>
-          <Text style={{fontSize:8}}>
+          <Text style={{fontSize:8,marginTop:'2%'}}>
             صلاحية العرض 24 ساعة فقط ومن ثم سيتم الغاء العرض تلقائيا
           </Text>
           </View>
@@ -185,8 +187,8 @@ componentWillUnmount(){
              onPress={()=>{ 
                      this.props.navigation.replace('tabs')}}    />
          </View>
-         <View style={{marginTop:'5%',width:'100%'}} >
-          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%'}}>
+         <View style={{marginTop:'5%',width:'100%',textAlign:'right'}} >
+          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%',textAlign:'right'}}>
             اسم العرض <Text style={{color:'red'}}>*</Text>
           </Text>
           <TextInput placeholder=" رز بالدجاج ومعكرونة"
@@ -197,14 +199,19 @@ componentWillUnmount(){
             />
          </View>
          <View style={{marginTop:'5%',width:'100%'}} >
-          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%'}}>
+          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%',textAlign:'right'}}>
             نوع الطعام  <Text style={{color:'red'}}>*</Text>
           </Text>
           <DropDownPicker
-            listItemContainerStyle={{backgroundColor:'red',justifyContent:'center',alignItems:'center',width:'100%'}}
+         
+            listItemContainerStyle={{backgroundColor:'red',width:'100%'}}
             // listItemLabelStyle ={{backgroundColor:'green',justifyContent:'center'}}
-             listParentContainerStyle={{backgroundColor:'white',justifyContent:'center',alignItems:'center'}}
-             dropDownContainerStyle={{width:'90%',marginHorizontal:'5%'}}
+             listParentContainerStyle={{backgroundColor:'white',justifyContent:'center',
+             alignItems:'center'}}
+             dropDownContainerStyle={{width:'90%',marginHorizontal:'5%',
+             top:0,
+             marginBottom:'10%',
+             position:'relative'}}
               style={styles.dropdown}
               open={this.state.open}
               value={this.state.value} //genderValue
@@ -225,8 +232,8 @@ componentWillUnmount(){
              // zIndexInverse={1000}
             />
          </View>
-         <View style={{marginTop:'5%',width:'100%'}} >
-          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%'}}>
+         <View style={{marginTop:'5%',width:'100%',}} >
+          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%', textAlign:'right'}}>
             وصف الطعام  <Text style={{color:'gray'}}>(اختياري)</Text>
           </Text>
           <TextInput placeholder=" يرجى توضيح الطعام ووصفه بشكل مفصل ,مثل المكونات والنكهات والمدة "
@@ -237,10 +244,10 @@ componentWillUnmount(){
             />
          </View>
          <View style={{marginTop:'5%',width:'100%'}} >
-         <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%'}}>
+         <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%',textAlign:'right'}}>
             الكمية المتاحة   <Text style={{color:'red'}}>*</Text>
           </Text>
-        <View style={{flexDirection:'row',justifyContent:'flex-start',alignItems:'center',width:'80%',marginHorizontal:'10%',marginTop:'3%'}}>
+        <View style={{flexDirection:"row-reverse",justifyContent:'flex-start',alignItems:'center',width:'80%',marginHorizontal:'10%',marginTop:'3%'}}>
           < TouchableOpacity
           onPress={()=>this.setState({quantity_number:this.state.quantity_number+1})}
            style={{width:30,height:30,justifyContent:'center',
@@ -263,46 +270,31 @@ componentWillUnmount(){
         </View>
          </View>
          <View style={{marginTop:'5%',width:'100%'}}>
-          <View style={{flexDirection:'row',alignItems:'center',
+          <View style={{flexDirection:"row-reverse",alignItems:'center',
           justifyContent:'space-between',width:'90%',marginHorizontal:'5%'}}>
             <View style={{width:'45%',}}>
-            <Text style={{fontSize:12,fontWeight:'600',paddingHorizontal:'3%'}}>
+            <Text style={{fontSize:12,fontWeight:'600',paddingHorizontal:'3%',textAlign:'right'}}>
             تاريخ الانتهاء   <Text style={{color:'red'}}>*</Text>
           </Text>
             </View>
 
             <View style={{width:'45%',}}>
-          <Text style={{fontSize:12,fontWeight:'600'}}>
+          <Text style={{fontSize:12,fontWeight:'600',textAlign:'right'}}>
             وقت الاستلام   <Text style={{color:'red'}}>*</Text>
           </Text>
           </View>
           </View>
 
-        <View style={{flexDirection:'row',alignItems:'center',
-        width:'90%',marginTop:'1%',marginHorizontal:'4%'}}>
-        <TouchableHighlight
-        onPress={()=>this.showMode()}
-        style ={styles.end_data}
-        >
-          <View style={{flexDirection:'row',justifyContent:'space-between',width:'100%'}}>
-        <TextInput
-        style={{fontSize:14,color:'black'}}
-        placeholder=" حدد تاريخ الانتهاء  "
-        value={this.state.end_date.toLocaleDateString()}
-        editable={false}
-         />
-         <Entypo name="chevron-small-down" size={28} color="black" />
-          </View>
-       
-        </TouchableHighlight>
-     
+        <View style={{flexDirection:"row",alignItems:'center',justifyContent:"space-between",
+        width:'90%',marginTop:'1%',marginHorizontal:'4%',}}>
+        <View style={{width:'45%',marginHorizontal:'3%'}}>
             <DropDownPicker
               style={styles.recive_time_style}
               open={this.state.time_open}
                listItemContainerStyle={{backgroundColor:'red',justifyContent:'center',alignItems:'center',width:'100%'}}
               // listItemLabelStyle ={{backgroundColor:'green',justifyContent:'center'}}
                listParentContainerStyle={{backgroundColor:'white',justifyContent:'center',alignItems:'center'}}
-               dropDownContainerStyle={{width:180,justifyContent:'center',alignItems:'center'}}
+               dropDownContainerStyle={{width:180,justifyContent:'center',alignItems:'center',position:'relative',top:0}}
               value={this.state.time_value} //genderValue
               items={this.state.time_items}
               setOpen={ ()=>this.setState({time_open:false})}
@@ -320,24 +312,72 @@ componentWillUnmount(){
             //  zIndex={3000}
              // zIndexInverse={1000}
             /> 
-            
-       
-          </View> 
-        
-      
-         </View>
-     
-{this.state.show_picker && (
+          </View>
+          <View  style={{width:'45%',marginHorizontal:'3%'}}>
+          { this.state.platform ?  <TouchableOpacity
+       // onPress={()=>{ this.showMode()}}
+        style ={styles.end_data}>
+          <View style={{flexDirection:"row",justifyContent:'space-between',width:'100%'}}>
+            <Entypo name="chevron-small-down" size={28} color="black" />
+          <SafeAreaView>
         <DateTimePicker
           testID="dateTimePicker"
           value={this.state.end_date}
           mode={this.state.mood}
          // is24Hour={true}
-          onChange={this.onChange}
+        onChange={this.onChange}
+          style ={{justifyContent:'center',alignItems:'center',}}
+        /> 
+        </SafeAreaView>
+ 
+       
+          </View>
+       
+        </TouchableOpacity>  : <TouchableOpacity
+        onPress={()=>{ this.showMode()}}
+        style ={styles.end_data}>
+          <View style={{flexDirection:"row",justifyContent:'space-between',width:'100%'}}>
+            <Entypo name="chevron-small-down" size={28} color="black" />
+        <TextInput
+        style={{fontSize:14,color:'black'}}
+        placeholder=" حدد تاريخ الانتهاء  "
+        value={this.state.end_date.toLocaleDateString()}
+        editable={false}
+         />
+ 
+       
+          </View>
+       
+        </TouchableOpacity>
+
+          }
+      
+       </View>
+        
+       
+          </View> 
+        
+      
+         </View>
+         {this.state.platform?null:this.state.show_picker && (
+         <SafeAreaView>
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={this.state.end_date}
+         // mode={this.state.mood}
+         // is24Hour={true}
+        onChange={this.onChange}
+          style ={{justifyContent:'center',alignItems:'center',}}
         />
-      )}
+        </SafeAreaView>
+      )
+  
+         }
+     
+     
+
          <View style={{marginTop:'5%',width:'100%'}} key={7}>
-          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%'}}>
+          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%',textAlign:'right'}}>
             مكان الاستلام   <Text style={{color:'gray'}}>(اختياري)</Text>
           </Text>
           <MapView style={styles.map} 
@@ -350,17 +390,17 @@ componentWillUnmount(){
            />
          </View >
       
-         <View style={{marginTop:'3%',width:'100%',height:70}} >
-          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%'}}>
+         <View style={{marginTop:'3%',width:'100%',}} >
+          <Text style={{fontSize:12,fontWeight:'600',width:'90%',marginHorizontal:'5%',textAlign:'right'}}>
             ارفاق الصور   <Text style={{color:'red'}}>*</Text>
           </Text>
           <DropDownPicker
-            listItemContainerStyle={{backgroundColor:'red',justifyContent:'center',alignItems:'center',width:'100%'}}
-             listItemLabelStyle ={{justifyContent:'center',marginTop:'5%',fontSize:14,fontWeight:'800'}}
-             listParentContainerStyle={{backgroundColor:'white',justifyContent:'center',alignItems:'center'}}
-             
-             dropDownContainerStyle={{width:'90%',marginHorizontal:'5%',height:100}}
+                 listItemContainerStyle={{backgroundColor:'red',justifyContent:'center',alignItems:'center',width:'100%'}}
+              // listItemLabelStyle ={{backgroundColor:'green',justifyContent:'center'}}
+               listParentContainerStyle={{backgroundColor:'white',justifyContent:'center',alignItems:'center'}}
+               dropDownContainerStyle={{width:'90%',position:'relative',top:0,left:20,}}
               style={styles.dropdown}
+                
               open={this.state.image_open}
               value={this.state.image_value} //genderValue
               items={this.state.camera_options}
@@ -376,8 +416,8 @@ componentWillUnmount(){
 
              }}
               placeholder= {this.state.image_value}
-        
-              placeholderStyle={{color:'black'}}
+         placeholderStyle={styles.placeholderStyles}
+           
               onOpen={()=>this.setState({image_open:!this.state.open,time_open:false,open:false})}
               listMode="SCROLLVIEW"
               scrollViewProps={{
@@ -389,18 +429,18 @@ componentWillUnmount(){
              // zIndexInverse={1000}
             />
          </View>
-         <View   style={{flexDirection:'row',justifyContent:'center',alignItems:'center',width:'90%',marginHorizontal:'5%',marginTop:'7%'}}>
+         <View   style={{flexDirection:"row-reverse",justifyContent:'center',alignItems:'center',width:'90%',marginHorizontal:'5%',marginTop:'7%'}}>
              <Text style={{fontSize:12,fontWeight:'600',}}>
             هل يحتوي الطعام على مسببات الحساسية ؟       
           </Text>
           <TouchableHighlight onPress={()=>this.go_tolink()}>
-            <Text style={{fontSize:12,fontWeight:'400',marginHorizontal:'5%',color:'#2E86C1'}}>
+            <Text style={{fontSize:12,fontWeight:'400',color:'#2E86C1'}}>
               الاطلاع على مسببات الحساسية
             </Text>
           </TouchableHighlight>
 
          </View>
-         <View style={{alignItems:'center',marginTop:'3%',}} >
+         <View style={{alignItems:'center',marginTop:'3%',justifyContent:'flex-start'}} >
          <RadioButton
          value="1"
          label="نعم"
@@ -451,7 +491,7 @@ componentWillUnmount(){
         
       </BottomSheet>
          
-            </View>
+            </SafeAreaView>
         )
     }
  } 
@@ -466,7 +506,7 @@ alignItems:'center',
 backgroundColor:'white'
   },
   header:{
-flexDirection:'row',
+flexDirection:'row-reverse',
 width:'90%',
 marginHorizontal:'5%',
 marginTop:'5%',
@@ -496,18 +536,17 @@ alignItems:'center'
 },
 search_input :{
         
-  
+
   backgroundColor:'white',
-  borderWidth:0.5,
-  marginVertical:'3%',
+  borderWidth:0.8,
+  marginTop:'5%',
   height:50,
   width:'90%',
   marginHorizontal:'5%',
   borderRadius:5,
  // paddingTop:'2%',
   paddingHorizontal:'3%',
-
-
+  textAlign:'right',
  fontSize:10,
 
 },
@@ -515,18 +554,20 @@ dropdown: {
   backgroundColor:'white',
   borderWidth:0.5,
   width:'90%',
-  flexDirection:'row',
+flexDirection:'row-reverse',
   //height:20,
   marginHorizontal:'5%',
   borderRadius:5,
-  marginTop:'3%',
+  marginTop:'4%',
   //paddingStart:'3%',
  fontSize:10,
+alignSelf:'flex-end'
 },
 placeholderStyles: {
   color: "grey",
   fontSize:12,
-  padding:'2%'
+  padding:'2%',
+  textAlign:'right',
   
 },
 icno_style:{
@@ -554,20 +595,29 @@ search_input_2 :{
 end_data : {
   backgroundColor:'white',
   paddingHorizontal:'3%',
-  marginHorizontal:'3%',
+ // marginHorizontal:'3%',
   borderWidth:0.5,
-  height:50,
-  width:'45%',
+  height:48,
+ // position:'relative',
+  //marginRight:200,
+// right:5,
+ // position:'absolute',
+
+ //top:1,
+  width:'100%',//marginEnd:100,
   borderRadius:5,
   marginTop:'2%',
   alignItems:'center',
-  justifyContent:'center', fontSize:10,
+  justifyContent:'center',
+  fontSize:10,
 },
 recive_time_style :{
   borderWidth:0.5,
-  width:'45%',
-  marginHorizontal:'3%',
-  flexDirection:'row',
+  width:'100%',
+   // height:20,
+  //marginHorizontal:'3%',
+  //  marginEnd:'55%',
+  flexDirection:"row-reverse",
   borderRadius:5,
   marginTop:'2%',
  fontSize:10,
@@ -599,7 +649,7 @@ radio_button_style:{
  //marginHorizontal:'5%',
  paddingHorizontal:'5%',
   alignItems:'center',
-  flexDirection:'row'
+  flexDirection:"row-reverse"
  
   //flexDirection:''
  
@@ -611,7 +661,6 @@ selection_style:{
   width:'90%',height:50,
   marginHorizontal:'5%',
     backgroundColor:'#B99C28',
-  
   justifyContent:'center',alignItems:'center',
   borderRadius:10,
  marginVertical:'5%'

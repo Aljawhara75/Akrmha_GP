@@ -9,7 +9,9 @@ import MapView from 'react-native-maps';
     constructor(props){
         super(props)
             this.state={
-                image :require('../../images/food1.jpg')
+             image :require('../../images/food1.jpg')
+               
+               
             }
   
     }
@@ -19,26 +21,28 @@ import MapView from 'react-native-maps';
             <ScrollView>
             < SafeAreaView style ={styles.container}> 
             <View style={styles.header}>
-            <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-            <Image source={require('../../images/application_image/male_profile.jpg')} style={styles.profile_image}/>
-            <View style={{paddingHorizontal:'3%'}}>
-                <Text style={{fontSize:12,color:'black'}}>
+            <View style={{flexDirection:"row-reverse",justifyContent:'center',alignItems:'center'}}>
+       <Image source={require('../../images/application_image/male_profile.jpg')} style={styles.profile_image}/>
+           
+            <View style={{paddingHorizontal:'3%',}}>
+                <Text style={{fontSize:12,color:'black',textAlign:'right'}}>
                 عبدالرحمن السهلي 
                 </Text>
                 <View style={{flexDirection:'row', justifyContent:'center',alignItems:'center'}}>
+                        <Text style={{color:'#5DADE2',fontSize:8,paddingVertical:'1%'}}>14 تقييم</Text>
                 <AntDesign name="star" size={15} color="#5DADE2" />
                 <AntDesign name="star" size={15} color="#5DADE2" />
                 <AntDesign name="star" size={15} color="#5DADE2" />
                 <AntDesign name="star" size={15} color="#5DADE2" />
                 <AntDesign name="star" size={15} color="#5DADE2" />
-                <Text style={{color:'#5DADE2',fontSize:8,paddingVertical:'1%'}}>14 تقييم</Text>
+        
               
                 </View>
                
             </View>
             </View>
           <TouchableOpacity onPress={()=>{ this.props.navigation.goBack()}}
-          style={{justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
+          style={{justifyContent:'center',alignItems:'center',flexDirection:"row-reverse"}}>
             <Text style={{paddingHorizontal:'3%'}}>
                 الرئيسية
             </Text>
@@ -47,40 +51,40 @@ import MapView from 'react-native-maps';
             </View>
          <View style={styles.card_view}>
          <Image source={this.state.image} style={styles.image_style} />
-         <View style={{justifyContent:'space-between',alignItems:'center',flexDirection:'row',width:'90%',marginHorizontal:'5%',marginTop:'5%'}}>
+         <View style={{justifyContent:'space-between',alignItems:'center',flexDirection:"row-reverse",width:'90%',marginHorizontal:'5%',marginTop:'5%'}}>
             <Text style={{color:'black',fontSize:14,fontWeight:'bold'}}>
                 وجبة برجر جاهزة عدد 2
             </Text>
-            <Image source={require('../../images/application_image/resturant.jpg')} style={styles.type_image}/>
+       <Image source={require('../../images/application_image/resturant.jpg')} style={styles.type_image}/>
          </View>
-         <View style ={{width:'90%',marginHorizontal:'5%',justifyContent:'flex-start',marginVertical:'3%'}}>
-         <Text style={{fontSize:12,}}>
+         <View style ={{width:'90%',marginHorizontal:'5%',marginVertical:'3%'}}>
+         <Text style={{fontSize:12,textAlign:'right'}}>
                 الكمية المتاحة :2 وجبة
             </Text>
          </View>
          <View style ={{width:'90%',marginHorizontal:'5%',justifyContent:'flex-start',marginVertical:'3%'}}>
-         <Text style={{fontSize:12,}}>
+         <Text style={{fontSize:12,textAlign:'right'}}>
                   مسبب للحساسية : لا 
             </Text>
          </View>
          <View style ={{width:'90%',marginHorizontal:'5%',justifyContent:'flex-start',marginVertical:'3%'}}>
-         <Text style={{fontSize:14,fontWeight:'bold'}}>
+         <Text style={{fontSize:14,fontWeight:'bold',textAlign:'right'}}>
                 وصف الوجبة:
             </Text>
          </View>
          <View style ={{width:'90%',marginHorizontal:'5%',justifyContent:'flex-start',}}>
-         <Text style={{fontSize:10,}}>
+         <Text style={{fontSize:10,textAlign:'right'}}>
                 وصف الوجبة:وجبة برجر جاهزة تتكون من قطعة لحم بقري طازجة ومشوية بشكل مثالي
                  ,توضع داخل خبز برجر ناعم,وتحشى بصلصة المايونيز اللذيذة والخضراوات الطازجة لتضفي النكهة والملمس المميز على البرجر.
             </Text>
          </View>
          <View style ={{width:'90%',marginHorizontal:'5%',justifyContent:'flex-start',marginTop:'5%'}}>
-         <Text style={{fontSize:10,color:'black',fontWeight:'bold'}}>
+         <Text style={{fontSize:10,color:'black',fontWeight:'bold',textAlign:'right'}}>
      وقت الاستلام :  29/5/2023 3:00مساءَ
             </Text>
          </View>
          <View style ={{width:'90%',marginHorizontal:'5%',justifyContent:'flex-start',marginTop:'5%'}}>
-         <Text style={{fontSize:10,color:'black',fontWeight:'bold'}}>
+         <Text style={{fontSize:10,color:'black',fontWeight:'bold',textAlign:'right'}}>
      مكان الاستلام:الرياض 
             </Text>
          </View>
@@ -95,7 +99,7 @@ import MapView from 'react-native-maps';
          </View>
         
          <View style={styles.footer}>
-            <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+            <View style={{ flexDirection:"row-reverse",justifyContent:'center',alignItems:'center'}}>
             <View style={styles.profile_male}>                 
             <Fontisto name="male" size={25} color="white" />      
                             </View>
@@ -103,7 +107,7 @@ import MapView from 'react-native-maps';
                 <Text style={{fontSize:16,color:'black',fontWeight:'900',paddingHorizontal:'3%'}}>
                 ابراهيم  
                 </Text>
-                <View style={{flexDirection:'row', justifyContent:'center',alignItems:'center'}}>
+                <View style={{ flexDirection:"row-reverse", justifyContent:'center',alignItems:'center'}}>
                 
                 <MaterialCommunityIcons name="map-marker-outline" size={20} color="black" />
                 <Text style={{fontSize:10,paddingVertical:'1%'}}>1.4 كم</Text>
@@ -112,7 +116,7 @@ import MapView from 'react-native-maps';
                
             </View>
             </View>
-          <View style={{justifyContent:'center',alignItems:'center',flexDirection:'row'}}>
+          <View style={{justifyContent:'center',alignItems:'center', flexDirection:"row-reverse",}}>
             <Text style={{paddingHorizontal:'3%',color:'#5DADE2'}}>
                 الطلب الان
             </Text>
@@ -139,7 +143,7 @@ backgroundColor:'white',
 
     },
     header:{
-        flexDirection:'row',
+        flexDirection:"row-reverse",
         justifyContent:'space-between',
         height:50,
         width:'100%',
@@ -175,7 +179,7 @@ backgroundColor:'white',
         borderRadius:25
      },
      footer:{
-        flexDirection:'row',
+        flexDirection:"row-reverse",
         justifyContent:'space-between',
         height:50,
         width:'100%',
