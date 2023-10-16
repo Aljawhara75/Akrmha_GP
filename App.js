@@ -1,5 +1,6 @@
 //import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View,TouchableHighlight,Platform } from 'react-native';
+import { useEffect } from 'react';
+import { StyleSheet, Text, View,TouchableHighlight,Platform , I18nManager ,  } from 'react-native';
 import { Feather,AntDesign ,FontAwesome5 ,MaterialIcons} from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -12,9 +13,19 @@ import After_add from './screens/search/after_add';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const platform =Platform.OS === 'ios'?true:false
+ /*const isRTLAndroid = Platform.OS === 'android' && I18nManager.isRTL;
+    if (isRTLAndroid) {
+      I18nManager.forceRTL(true);
+      I18nManager.allowRTL(true);
+      
+   // Expo.Updates.reload();
+    } */
+  
 function MyTabs() {
   return (
-    <Tab.Navigator screenOptions={{
+    <Tab.Navigator 
+    initialRouteName='Home'
+     screenOptions={{
       tabBarStyle : {
         height:"10%",
        // justifyContent:'center',
@@ -99,6 +110,11 @@ function MyTabs() {
 }
 
 export default function App() {
+  useEffect(() => {
+    I18nManager.forceRTL(false);
+    I18nManager.allowRTL(false);
+    // Your code here
+  }, []);
   return (
     
    <NavigationContainer>

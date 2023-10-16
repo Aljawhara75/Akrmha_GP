@@ -56,8 +56,8 @@ import * as Linking from 'expo-linking';
             platform:Platform.OS === 'ios'?true:false,
         
         }
-       I18nManager.allowRTL(true);
-      I18nManager.forceRTL(true);
+      // I18nManager.allowRTL(true);
+     // I18nManager.forceRTL(true);
      // I18nManager.isRTL()
         this.setValue = this.setValue.bind(this);
         this.time_setValue = this.time_setValue.bind(this);
