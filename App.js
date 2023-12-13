@@ -1,141 +1,259 @@
-//import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import { StyleSheet, Text, View,TouchableHighlight,Platform , I18nManager ,  } from 'react-native';
-import { Feather,AntDesign ,FontAwesome5 ,MaterialIcons} from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useContext, useEffect } from "react";
+import { View, Button, Alert, StatusBar, SafeAreaView, Platform } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Register from "./components/Register"; // Make sure the path is correct
+import Login from "./components/Login";
+import Onboarding from "./components/Onboarding";
+import OTPVerification from "./components/OTPVerification";
+import OnboardingItem from "./components/OnboardingItem";
+import Slides from "./components/Slides";
+import Splash from "./components/splash"; // Make sure the path is correct
+import AuthContext, { AuthProvider } from "./contexts/auth";
+import SearchPage from "./components/searchFood/SearchPage";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getUserWithPhoneAndUser } from "./api/database";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "./components/firebase";
+import Tabs from "./components/Tabs";
+import Home from "./components/HomeScreen/Home";
+import Menu from "./components/Menu";
+import AddOne from "./components/AddOne";
+import FoodCardDeatils from "./components/common/FoodCardDetails";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import RequestOrder from "./components/RequestOrder/RequestOrder";
+import OrderDetails from "./components/AcceptOrder/OrderDetails";
+import MapScreen from "./components/searchFood/MapScreen";
+import Chat from "./components/chatModule/Chat";
+import EditProfile from "./components/EditProfile/EditProfile";
+import Notification from "./components/HomeScreen/Notification";
+// import messaging from '@react-native-firebase/messaging';
+// import { Notifications } from 'react-native-notifications';
 
-import { Splash ,Onboarding } from './screens/authentication';
-import { Akremha,List ,Message,Home,Search } from './screens/tabs';
-import { Search_Map,Food_offer } from './screens/search';
-import After_add from './screens/search/after_add';
-const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
-const platform =Platform.OS === 'ios'?true:false
- /*const isRTLAndroid = Platform.OS === 'android' && I18nManager.isRTL;
-    if (isRTLAndroid) {
-      I18nManager.forceRTL(true);
-      I18nManager.allowRTL(true);
-      
-   // Expo.Updates.reload();
-    } */
-  
-function MyTabs() {
+// import { StatusBar } from "expo-status-bar";
+
+const Stack = createStackNavigator();
+
+const TestScreen = () => {
+  const testFunc = async () => {
+    const userData = {
+      mobileNum: "111",
+      username: "bbb",
+    };
+    const result = await getUserWithPhoneAndUser(
+      userData.mobileNum,
+      userData.username
+    );
+
+    // Alert.alert(JSON.stringify(result, null, 2));
+
+    if (result.success && result.found) {
+      Alert.alert("حساب مٌسجل", result.message, [
+        {
+          text: "شكرًا",
+          onPress: () => console.log("شكرًا Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "تسجيل الدخول",
+          onPress: () => console.log("تسجيل الدخول Pressed"),
+          style: "default",
+        },
+      ]);
+    } else if (result.success && !result.found) {
+      console.log(
+        `result.success && !result.found`,
+        result.success && !result.found
+      );
+
+      await addDoc(collection(db, "users"), userData);
+      // verficationResult && signIn(userData);
+      // if add data to database, set isLogin to true and store user data
+    }
+  };
+
   return (
-    <Tab.Navigator 
-    initialRouteName='Home'
-     screenOptions={{
-      tabBarStyle : {
-        height:"10%",
-       // justifyContent:'center',
-        alignItems:'center',
-        borderTopRightRadius:25,
-        borderTopLeftRadius:25,
-       
-      },
-      tabBarHideOnKeyboard:'true',
-      tabBarIconStyle:{
-  
-   marginVertical:'10%'
-      },
-   
-   
-    }} >
-   
-  
-   
-       <Tab.Screen name="message" component={Message} options={{ headerShown: false,
-             tabBarLabel: ({focused})=>{return(<Text style ={ Platform.OS === 'ios'?{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'10%',
-              paddingTop:'25%'}:{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'1%',
-              paddingTop:'1%'} }>الرسائل </Text>)},
-             tabBarIcon: ({ focused, size }) => {
-            return (
-              <MaterialIcons name="mail-outline" size={20} color={focused ? '#B99C28':"black"} style={{position:'absolute',top:15}} />
-          )
-          },
-        }}
-
-        />
-            <Tab.Screen name="list" component={List}  options={{ headerShown: false,
-           tabBarLabel: ({focused})=>{return(<Text style ={ Platform.OS === 'ios'?{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'10%',
-              paddingTop:'25%'}:{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'1%',
-              paddingTop:'1%'} }>القوائم </Text>)},
-         tabBarIcon: ({ focused, size }) => {
-        return (
-          <FontAwesome5 name="file-alt" size={20}color={focused ? '#B99C28':"black"}style={{position:'absolute',top:15}}/>
-      )
-      },
-       }}/>
-        
-      <Tab.Screen name="akremha" component={Akremha}  options={{ headerShown: false ,
-             tabBarLabel: ({focused})=>{return(<Text style ={ Platform.OS === 'ios'?{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'10%',
-              paddingTop:'25%'}:{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'1%',
-              paddingTop:'1%'} }>اكرمها </Text>)},
-             tabBarIconStyle:{
-             marginTop:'10%'
-             },
-             tabBarIcon: ({ focused, size }) => {
-            return (
-              <AntDesign name="pluscircle" size={40} color="#B99C28"  style={{position:'absolute',top:-5}} />
-          )
-          },
-      }}/>
-           <Tab.Screen name="search" component={Search} options={{ headerShown: false,
-         tabBarLabel: ({focused})=>{return(<Text style ={ Platform.OS === 'ios'?{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'10%',
-              paddingTop:'25%'}:{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'1%',
-              paddingTop:'1%'} }>البحث </Text>)},
-         tabBarIcon: ({ focused, size }) => {
-        return (
-        <Feather name="search" size={20} color={focused ? '#B99C28':"black"}  style={{position:'absolute',top:15}}/>
-      
-      )
-      },
-     }} />
-           <Tab.Screen name="Home" component={Home}  options={{ headerShown: false ,
-    
-        tabBarLabel: ({focused})=>{return(<Text style ={ Platform.OS === 'ios'?{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'10%',
-              paddingTop:'25%'}:{color:focused?'#B99C28':'black',fontSize:8,height:'50%',textAlignVertical:'center',marginTop:'1%',
-              paddingTop:'1%'} }>الرئيسية </Text>)},
-         tabBarIcon: ({ focused, size }) => {
-        return (
-         <Feather name="home" size={20} color={focused ? '#B99C28':"black"} style={{position:'absolute',top:15}} />
-      
-      )
-      },
-       }}/>
-     
-    </Tab.Navigator>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Button title="Test" onPress={testFunc} />
+    </View>
   );
-}
+};
+
+const AppNavigator = () => {
+  const { signed, signIn } = useContext(AuthContext);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const checkAsyncStorage = async () => {
+      const localUser = await AsyncStorage.getItem("user");
+      await signIn(JSON.parse(localUser));
+
+      const user = localUser ? JSON.parse(localUser) : null;
+
+      if (user) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Tabs" }], // Navigate to Tabs instead of Home
+        });
+      } else {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Onboarding" }],
+        });
+      }
+    };
+
+    checkAsyncStorage();
+  }, [signed]);
+
+  return (
+    <Stack.Navigator initialRouteName="Onboarding">
+      {/* <Stack.Screen
+        name="TestScreen"
+        component={TestScreen}
+        options={{ headerShown: false }}
+      /> */}
+
+      <Stack.Screen
+        name="Tabs"
+        component={Tabs}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Splash"
+        component={Splash}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Onboarding"
+        component={Onboarding}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="OTPVerification"
+        component={OTPVerification}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Menu"
+        component={Menu}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FoodDeatisScreen"
+        component={FoodCardDeatils}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddOne"
+        component={AddOne}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="requestOrder"
+        component={RequestOrder}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="orderDeatils"
+        component={OrderDetails}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="mapScreen"
+        component={MapScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="userChat"
+        component={Chat}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{ headerShown: false }}
+      />
+        <Stack.Screen
+        name="notifications"
+        component={Notification}
+        options={{ headerShown: false, }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export default function App() {
-  useEffect(() => {
-    I18nManager.forceRTL(false);
-    I18nManager.allowRTL(false);
-    // Your code here
-  }, []);
-  return (
-    
-   <NavigationContainer>
-    <Stack.Navigator initialRouteName="splash">
-      <Stack.Screen name="tabs" component={MyTabs}  options={{ headerShown: false }} />
-      <Stack.Screen name="search_map" component={Search_Map}  options={{ headerShown: false }} />
-      <Stack.Screen name="food_offer" component={Food_offer}  options={{ headerShown: false }} />
-      <Stack.Screen name="after_add" component={After_add}  options={{ headerShown: false }} />
-      <Stack.Screen name="splash" component={Splash}  options={{ headerShown: false }} />
-      <Stack.Screen name="onboarding" component={Onboarding}  options={{ headerShown: false }} />
-    </Stack.Navigator>
-  </NavigationContainer>
 
+  // useEffect(() => {
+  //   messaging().onNotificationOpenedApp(async (remoteMessage) => { });
+
+  //   // Check whether an initial notification is available
+  //   messaging()
+  //     .getInitialNotification()
+  //     .then(async (remoteMessage) => { });
+
+  //   messaging().setBackgroundMessageHandler(async remoteMessage => {
+
+  //     const { body, title } = remoteMessage.data;
+          
+  //     Notifications.postLocalNotification({
+  //       title: title,
+  //       body: body,
+  //     });
+  //   });
+
+  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
+  //     try {
+
+  //       const { body, title } = remoteMessage.data;
+
+  //       Notifications.postLocalNotification({
+  //         title: title,
+  //         body: body,
+  //       });
+        
+  //     } catch (error) {
+  //       console.error('Error processing foreground notification:', error);
+  //     }
+  //   });
+
+  //   return unsubscribe;
+
+  // }, []);
+
+  return (
+    <View style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <SafeAreaView style={{ flexGrow: 1, paddingTop: 10 }}>
+          <NavigationContainer>
+            <StatusBar style="auto" />
+            <AuthProvider>
+              <AppNavigator />
+            </AuthProvider>
+          </NavigationContainer>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

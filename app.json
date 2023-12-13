@@ -1,36 +1,28 @@
 {
   "expo": {
-    "name": "Akremha_a",
-    "slug": "Akremha_a",
+    "name": "Akrmha9",
+    "slug": "Akrmha9",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+    "icon": "./assets/logo.png",
+    "userInterfaceStyle": "light"
+  },
+  "assetBundlePatterns": ["**/*"],
+  "ios": {
+    "supportsTablet": true
+  },
+  "android": {
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/adaptive-icon.png",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+    "config": {
+      "googleMaps": {
+        "apiKey": "AIzaSyC49-ii5Agv0-k5F-gg91G31kKwO9fpDTY"
       }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "supportsRTL": false
-    },
-    "plugins": [
-      "expo-localization"
-    ]
+    }
+  },
+  "web": {
+    "favicon": "./assets/favicon.png"
   }
 }
